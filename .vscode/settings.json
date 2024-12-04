@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "D:/Projects/Flutter test/manage_flutter/windows"
+    "cmake.sourceDirectory": "D:/Projects/Flutter test/manage_flutter/windows",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
