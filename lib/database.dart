@@ -3,7 +3,7 @@ import 'package:mysql1/mysql1.dart';
 
 Future database() async {
   var setting = ConnectionSettings(
-    host: '127.0.0.1',
+    host: '10.0.2.2',
     port: 3306,
     user: 'admin',
     password: 'admin',

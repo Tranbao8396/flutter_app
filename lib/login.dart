@@ -1,31 +1,23 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-class MyAppState extends ChangeNotifier {
-  // var current = WordPair.random();
-
-  // void getNext() {
-  //   current = WordPair.random();
-  //   notifyListeners();
-  // }
-
-  // var favorites = <WordPair>[];
-
-  // void toggleFavorite() {
-  //   if (favorites.contains(current)) {
-  //     favorites.remove(current);
-  //   } else {
-  //     favorites.add(current);
-  //   }
-  //   notifyListeners();
-  // }
-}
+import 'package:mysql1/mysql1.dart';
+import 'database.dart';
+import 'home.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
+}
+
+Future checkLogin(String email, String password) async {
+  MySqlConnection conn = await database();
+  var result = await conn.query("SELECT * FROM users WHERE user_email = '$email' and user_pass = '$password'");
+
+  if (result.isNotEmpty) {
+    return result;
+  } else {
+    return null;
+  }
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
@@ -80,12 +72,36 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 ElevatedButton(
                   child: Text('Login'),
-                  onPressed: () {
+                  onPressed: () async {
                     var email = emailController.text;
                     var password = passwordController.text;
 
                     if (email != "" || password != "") {
-                      print('Login successful');
+                      var authed = await checkLogin(email, password);
+                      if (authed != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyHomePage()),
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Invalid email or password'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('OK'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     } else {
                       showDialog(
                         context: context,

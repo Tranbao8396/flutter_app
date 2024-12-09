@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'database.dart';
-import 'package:mysql1/mysql1.dart';
 import 'login.dart';
+import 'state/stateapp.dart';
 
-void main() {
+Future main() async {
   runApp(MyApp());
 }
 
