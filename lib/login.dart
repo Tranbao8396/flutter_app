@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
-import 'database.dart';
-import 'home.dart';
+import 'package:book_management/database.dart';
+import 'package:book_management/home.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
