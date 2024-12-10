@@ -5,26 +5,29 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding (
-        padding: EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(child: InfoCard()),
-            Expanded(child: InfoCard()),
-          ],
-        ),
+      body: Column (
+        children: [
+          Padding (
+            padding: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(child: InfoCard(title: 'Income')),
+                Expanded(child: InfoCard(title: 'Outcome')),
+              ],
+            ),
+          ),
+        ],
       )
     );
   }
 }
 
 class InfoCard extends StatelessWidget {
-  // final MySqlConnection db;
-
+  final String title;
   const InfoCard({
-    super.key
-    // required this.db,
+    super.key,
+    required this.title
   });
 
   @override
@@ -32,7 +35,19 @@ class InfoCard extends StatelessWidget {
     return Card(
       child: Padding (
         padding: const EdgeInsets.all(16),
-        child: Text('money')
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+              ),
+              title
+            ),
+            Text('money')
+          ],
+        )
       )
     );
   }
