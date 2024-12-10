@@ -42,32 +42,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                 Text(('Welcome to Management app').toUpperCase()),
                 Padding(
                     padding: const EdgeInsets.all(15),
-                    child: TextFormField(
+                    child: TextField(
                       controller: emailController,
                       decoration: const InputDecoration(
                         hintText: 'Enter your email',
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
                     )),
                 Padding(
                   padding: const EdgeInsets.all(15),
-                  child: TextFormField(
+                  child: TextField(
                     obscureText: true,
                     controller: passwordController,
                     decoration: const InputDecoration(
                       hintText: 'Enter your password',
                     ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 ElevatedButton(

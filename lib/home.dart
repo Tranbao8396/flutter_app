@@ -1,3 +1,4 @@
+import 'package:book_management/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,16 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
+
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Logout'),
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginWidget())
+          );
+        }
+      )
     );
   }
 }
