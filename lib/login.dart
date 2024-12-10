@@ -79,12 +79,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                     if (email != "" || password != "") {
                       var authed = await checkLogin(email, password);
                       if (authed != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyHomePage()),
-                        );
+                        if(context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                          );
+                        }
                       } else {
-                        showDialog(
+                        if (context.mounted) {
+                          showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
@@ -101,6 +104,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             );
                           },
                         );
+                        }
                       }
                     } else {
                       showDialog(
