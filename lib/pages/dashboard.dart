@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:book_management/database.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 Future getTotalPrice() async {
   MySqlConnection db = await database();
@@ -22,9 +24,25 @@ Future getImportPrice() async {
   }
 }
 
+class _SalesData {
+  _SalesData(this.year, this.sales);
+
+  final String year;
+  final double sales;
+}
+
+List<_SalesData> data = [
+  _SalesData('Jan', 35),
+  _SalesData('Feb', 28),
+  _SalesData('Mar', 34),
+  _SalesData('Apr', 32),
+  _SalesData('May', 40)
+];
+
 class Dashboard extends StatelessWidget {
   final totalPrice = getTotalPrice();
   final importPrice = getImportPrice();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +58,26 @@ class Dashboard extends StatelessWidget {
               ],
             ),
           ),
-        ],
+
+          Card(
+            margin: const EdgeInsets.all(16),
+            child: Padding (
+              padding: const EdgeInsets.all(16),
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(),
+                series: <CartesianSeries<_SalesData, String>>[
+                  LineSeries<_SalesData, String>(
+                    dataSource: data,
+                    xValueMapper: (_SalesData sales, _) => sales.year,
+                    yValueMapper: (_SalesData sales, _) => sales.sales,
+                    name: 'Sales',
+                    // Enable data label
+                    dataLabelSettings: DataLabelSettings(isVisible: true))
+                ],
+              )
+            )
+          ),
+        ]
       )
     );
   }
