@@ -57,23 +57,39 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding (
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18
-              ),
-              title
-            ),
-            Text('money')
-          ],
-        )
-      )
+    return FutureBuilder(
+      future: results,
+      builder: (context, snapshot) {
+        final result = snapshot.data;
+        List<Widget> children = [];
+
+        if (snapshot.hasData) {
+          for (var row in result) {
+            children = <Widget>[
+              Text(row[0].toString())
+            ];
+          }
+        }
+
+        return Card(
+          child: Padding (
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18
+                  ),
+                  title
+                ),
+                Column(children: children,)
+              ],
+            )
+          )
+        );
+      },
     );
   }
 }
