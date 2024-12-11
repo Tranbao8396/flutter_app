@@ -63,22 +63,29 @@ class Dashboard extends StatelessWidget {
             margin: const EdgeInsets.all(16),
             child: Padding (
               padding: const EdgeInsets.all(16),
-              child: SfCartesianChart(
-                primaryXAxis: CategoryAxis(),
-                series: <CartesianSeries<_SalesData, String>>[
-                  LineSeries<_SalesData, String>(
-                    dataSource: data,
-                    xValueMapper: (_SalesData sales, _) => sales.year,
-                    yValueMapper: (_SalesData sales, _) => sales.sales,
-                    name: 'Sales',
-                    // Enable data label
-                    dataLabelSettings: DataLabelSettings(isVisible: true))
-                ],
-              )
+              child: Chart()
             )
           ),
         ]
       )
+    );
+  }
+}
+
+class Chart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SfCartesianChart(
+      primaryXAxis: CategoryAxis(),
+      series: <CartesianSeries<_SalesData, String>>[
+        LineSeries<_SalesData, String>(
+          dataSource: data,
+          xValueMapper: (_SalesData sales, _) => sales.year,
+          yValueMapper: (_SalesData sales, _) => sales.sales,
+          name: 'Sales',
+          // Enable data label
+          dataLabelSettings: DataLabelSettings(isVisible: true))
+      ],
     );
   }
 }
