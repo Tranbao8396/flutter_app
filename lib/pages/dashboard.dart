@@ -48,6 +48,28 @@ Future getSalersData() async {
   }
 }
 
+Future getStorage() async {
+  MySqlConnection db = await database();
+  var results = await db.query('SELECT SUM(quantity) as quantities FROM `imports`');
+
+  if (results.isNotEmpty) {
+    return results;
+  } else {
+    return null;
+  }
+}
+
+Future getPublishers() async {
+  MySqlConnection db = await database();
+  var results = await db.query('SELECT COUNT(*) as publisher_count FROM `book_supplier`');
+
+  if (results.isNotEmpty) { 
+    return results;
+  } else {
+    return null;
+  }
+}
+
 class _SalesData {
   _SalesData(this.year, this.sales);
 
@@ -65,6 +87,8 @@ class _SalersData {
 class Dashboard extends StatelessWidget {
   final totalPrice = getTotalPrice();
   final importPrice = getImportPrice();
+  final storage = getStorage();
+  final publisher = getPublishers();
 
   @override
   Widget build(BuildContext context) {
@@ -98,14 +122,14 @@ class Dashboard extends StatelessWidget {
               children: [
                 Expanded(
                   child: InfoCard(
-                    title: 'Income',
-                    results: totalPrice,
+                    title: 'Storage',
+                    results: storage,
                   )
                 ),
                 Expanded(
                   child: InfoCard(
-                    title: 'Outcome',
-                    results: importPrice,
+                    title: 'Publishers',
+                    results: publisher,
                   )
                 ),
               ],
