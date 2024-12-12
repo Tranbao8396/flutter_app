@@ -241,20 +241,23 @@ class InfoCard extends StatelessWidget {
         }
 
         return Card(
-            child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                        title),
-                    Column(
-                      children: children,
-                    )
-                  ],
-                )));
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 18),
+                    title
+                  ),
+                Column(
+                  children: children,
+                )
+              ],
+            )
+          )
+        );
       },
     );
   }
