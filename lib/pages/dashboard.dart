@@ -69,34 +69,59 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
+      body: ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
                   child: InfoCard(
-                title: 'Income',
-                results: totalPrice,
-              )),
-              Expanded(
+                    title: 'Income',
+                    results: totalPrice,
+                  )
+                ),
+                Expanded(
                   child: InfoCard(
-                title: 'Outcome',
-                results: importPrice,
-              )),
-            ],
+                    title: 'Outcome',
+                    results: importPrice,
+                  )
+                ),
+              ],
+            ),
           ),
-        ),
-        Card(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: InfoCard(
+                    title: 'Income',
+                    results: totalPrice,
+                  )
+                ),
+                Expanded(
+                  child: InfoCard(
+                    title: 'Outcome',
+                    results: importPrice,
+                  )
+                ),
+              ],
+            ),
+          ),
+          Card(
             margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: Padding(padding: const EdgeInsets.all(16), child: Chart())),
-        Card(
+            child: Padding(padding: const EdgeInsets.all(16), child: Chart())
+          ),
+          Card(
             margin: const EdgeInsets.all(16),
-            child: Padding(padding: const EdgeInsets.all(16), child: SalersChart())),
-      ],
-    ));
+            child: Padding(padding: const EdgeInsets.all(16), child: SalersChart())
+          ),
+        ],
+      )
+    );
   }
 }
 

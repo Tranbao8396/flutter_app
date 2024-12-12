@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
       ),
-      home: MyHomePage(),
+      home: SafeArea(child: MyHomePage()),
     );
   }
 }
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         }
       ),
-      body: SafeArea(child: page),
+      body: page,
     );
   }
 }
