@@ -13,10 +13,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Book Management',
+      title: 'Books Management',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 60, 0)),
       ),
       home: SafeArea(child: MyHomePage()),
     );
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Management'),
+        title: Text('Books Management'),
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
