@@ -19,16 +19,19 @@ class Invoices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTableExp(),
-            ),
-          ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTableExp(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -53,7 +56,7 @@ class DataTableExp extends StatelessWidget {
                 cells: <DataCell>[
                   DataCell(
                     Text(
-                      row[0].toString()
+                      row[0].toString(),
                     )
                   ),
                   DataCell(
@@ -62,13 +65,17 @@ class DataTableExp extends StatelessWidget {
                     )
                   ),
                   DataCell(Text(row[2].toString())),
-                ]
+                ],
+                onSelectChanged: (value) {
+                  int id = row[0];
+                },
               )
             );
           }
         }
 
         return DataTable(
+        showCheckboxColumn: false,
           columns: [
             DataColumn(
               label: Expanded(child: Text('ID'))
