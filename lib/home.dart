@@ -49,6 +49,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Books Management'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginWidget()),
+              );
+            },
+          )
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
