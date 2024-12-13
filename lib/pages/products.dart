@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:book_management/database.dart';
 import 'package:mysql1/mysql1.dart';
@@ -19,6 +20,48 @@ class Products extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.search),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => Dialog(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Search', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                    TextFormField(
+
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Search'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -28,19 +71,6 @@ class Products extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: DataTableExp(),
             ),
-
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print('test');
-                    },
-                    child: Text('text')
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),

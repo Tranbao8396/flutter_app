@@ -76,15 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Logout'),
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoginWidget()),
-          );
-        }
-      ),
       body: page,
     );
   }
