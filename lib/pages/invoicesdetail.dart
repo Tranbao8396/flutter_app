@@ -1,13 +1,10 @@
-import 'package:book_management/login.dart';
-import 'package:book_management/pages/invoicesdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:book_management/database.dart';
-import 'package:intl/intl.dart';
 import 'package:mysql1/mysql1.dart';
 
-Future getInvoices() async {
+Future getInvoiceDetail(int id) async {
   MySqlConnection db = await database();
-  String sql = 'SELECT b.id, b.created_date, SUM(a.price) FROM `invoice_detail` a LEFT JOIN invoices b ON a.invoice_id = b.id GROUP BY b.id;';
+  String sql = 'SELECT a.invoice_id, b.book_name, SUM(a.quantity) as quantities, a.price * SUM(a.quantity) as prices FROM invoice_detail a LEFT JOIN imports b ON a.item = b.id WHERE a.invoice_id = $id GROUP BY a.item;';
   var results = await db.query(sql);
 
   if (results.isNotEmpty) {
@@ -17,10 +14,20 @@ Future getInvoices() async {
   }
 }
 
-class Invoices extends StatelessWidget {
+class InvoiceDetail extends StatelessWidget {
+  final int id;
+
+  const InvoiceDetail({
+    super.key,
+    required this.id
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Invoice Detail #$id'),
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
@@ -30,7 +37,7 @@ class Invoices extends StatelessWidget {
             children: [
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: DataTableExp(),
+                child: DataTableExp(id: id),
               ),
             ],
           ),
@@ -41,9 +48,16 @@ class Invoices extends StatelessWidget {
 }
 
 class DataTableExp extends StatelessWidget {
-  final products = getInvoices();
+  final int id;
+
+  const DataTableExp({
+    super.key,
+    required this.id
+  });
+
   @override
   Widget build(BuildContext context) {
+    final products = getInvoiceDetail(id);
     return FutureBuilder(
       future: products,
       builder: (context, snapshot) {
@@ -56,27 +70,10 @@ class DataTableExp extends StatelessWidget {
             dataRow.add(
               DataRow(
                 cells: <DataCell>[
-                  DataCell(
-                    Text(
-                      row[0].toString(),
-                    )
-                  ),
-                  DataCell(
-                    Text(
-                      DateFormat.yMd().add_jm().format(row[1]).toString()
-                    )
-                  ),
+                  DataCell(Text(row[1].toString())),
                   DataCell(Text(row[2].toString())),
+                  DataCell(Text(row[3].toString())),
                 ],
-                onSelectChanged: (value) {
-                  int id = row[0];
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InvoiceDetail(id: id)
-                    )
-                  );
-                },
               )
             );
           }
@@ -86,13 +83,13 @@ class DataTableExp extends StatelessWidget {
         showCheckboxColumn: false,
           columns: [
             DataColumn(
-              label: Expanded(child: Text('ID'))
+              label: Expanded(child: Text('Book'))
             ),
             DataColumn(
-              label: Expanded(child: Text('Date'))
+              label: Expanded(child: Text('Quantities'))
             ),
             DataColumn(
-              label: Expanded(child: Text('Price'))
+              label: Expanded(child: Text('Prices'))
             ),
           ],
           rows: dataRow,
