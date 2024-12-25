@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 Future getTotalPrice() async {
   MySqlConnection db = await database();
-  var result = await db.query('select sum(price) from invoice_detail');
+  var result = await db.query('select (sum(price) - (select sum(import_price)*sum(quantity) from imports)) from invoice_detail');
   if (result.isNotEmpty) {
     return result;
   } else {
