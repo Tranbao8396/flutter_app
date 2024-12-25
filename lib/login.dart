@@ -46,6 +46,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       controller: emailController,
                       decoration: const InputDecoration(
                         hintText: 'Enter your email',
+                        border: OutlineInputBorder(),
                       ),
                     )),
                 Padding(
@@ -55,6 +56,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     controller: passwordController,
                     decoration: const InputDecoration(
                       hintText: 'Enter your password',
+                      border: OutlineInputBorder(),
                     ),
                   ),
                 ),

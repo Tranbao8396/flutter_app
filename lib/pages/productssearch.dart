@@ -2,12 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:book_management/database.dart';
 import 'package:mysql1/mysql1.dart';
-import 'package:book_management/pages/productssearch.dart';
 
-Future getPorducts() async {
+Future getPorductsSearch(String search) async {
   MySqlConnection db = await database();
 
-  String sql = 'SELECT a.id, a.book_name, b.price, a.quantity, c.supplier, d.category_name FROM `imports` a Left JOIN book_store b ON a.id = b.book_id LEFT JOIN book_supplier c ON a.sup_id = c.id LEFT JOIN books_category d ON b.category_id = d.id';
+  String sql = 'SELECT a.id, a.book_name, b.price, a.quantity, c.supplier, d.category_name FROM `imports` a Left JOIN book_store b ON a.id = b.book_id LEFT JOIN book_supplier c ON a.sup_id = c.id LEFT JOIN books_category d ON b.category_id = d.id WHERE a.book_name LIKE "%$search%"';
   var results = await db.query(sql);
 
   if(results.isNotEmpty) {
@@ -17,12 +16,22 @@ Future getPorducts() async {
   }
 }
 
-class Products extends StatelessWidget {
+class ProductsSearch extends StatelessWidget {
+  final String search;
+
+  const ProductsSearch({
+    super.key,
+    required this.search
+  });
+
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController(); 
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Search for #$search'),
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.search),
         onPressed: () {
@@ -108,7 +117,7 @@ class Products extends StatelessWidget {
             children: [
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: DataTableExp(),
+                child: DataTableExp(search: search,),
               ),
             ],
           ),
@@ -119,9 +128,17 @@ class Products extends StatelessWidget {
 }
 
 class DataTableExp extends StatelessWidget {
-  final products = getPorducts();
+  final String search;
+
+  const DataTableExp({
+    super.key,
+    required this.search
+  });
+
   @override
   Widget build(BuildContext context) {
+    final products = getPorductsSearch(search);
+
     return FutureBuilder(
       future: products,
       builder: (context, snapshot) {
